@@ -5,6 +5,7 @@ import touhou.GameWindow;
  */
 public class Program {
     public static void main(String[] args) {
+        System.out.println("Hello Word");
         GameWindow gameWindow = new GameWindow();
         System.out.println("Starting loop");
         gameWindow.loop();
