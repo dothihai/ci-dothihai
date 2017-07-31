@@ -21,16 +21,22 @@ public class GameWindow extends Frame {
     private Graphics2D backbufferGraphics;
     private BufferedImage background;
     private BufferedImage straight_player;
-    private int playerX = 190;
-    private int playerY = 600;
+    private BufferedImage right_player;
+    private int straight_playerX = 190;
+    private int straight_playerY = 600;
+    private int right_playerX = 10;
+    private int right_playerY = 600;
     private int backgroundY=-2000;
     private int x;
     private int y;
+    private int x1;
+    private int y1;
 
 
     public GameWindow() {
         background = SpriteUtils.loadImage("assets/images/background/0.png");
         straight_player = SpriteUtils.loadImage("assets/images/players/straight/0.png");
+        right_player = SpriteUtils.loadImage("assets/images/players/right/0.png");
         setupGameLoop();
         setupWindow();
     }
@@ -77,7 +83,24 @@ public class GameWindow extends Frame {
                     y=2;
                     System.out.println("DOWN");
                 }
+                if(e.getKeyCode() == KeyEvent.VK_D){
+                    x1=2;
+                    System.out.println("RIGHT");
+                }
+                if(e.getKeyCode() == KeyEvent.VK_A){
+                    x1=-2;
+                    System.out.println("LEFT");
+                }
+                if(e.getKeyCode() == KeyEvent.VK_W){
+                    y1=-2;
+                    System.out.println("UP");
+                }
+                if(e.getKeyCode() == KeyEvent.VK_Z){
+                    y1=2;
+                    System.out.println("DOWN");
+                }
                 System.out.println("key pressed");
+
 
             }
 
@@ -99,6 +122,22 @@ public class GameWindow extends Frame {
                     y=0;
                     System.out.println("DOWN");
                 }
+                if(e.getKeyCode() == KeyEvent.VK_D){
+                    x1=0;
+                    System.out.println("RIGHT");
+                }
+                if(e.getKeyCode() == KeyEvent.VK_A){
+                    x1=0;
+                    System.out.println("LEFT");
+                }
+                if(e.getKeyCode() == KeyEvent.VK_W){
+                    y1=0;
+                    System.out.println("UP");
+                }
+                if(e.getKeyCode() == KeyEvent.VK_Z){
+                    y1=0;
+                    System.out.println("DOWN");
+                }
                 System.out.println("key released");
             }
         });
@@ -118,8 +157,10 @@ public class GameWindow extends Frame {
     }
 
     private void run() {
-        playerX += x;
-        playerY += y;
+        straight_playerX += x;
+        straight_playerY += y;
+        right_playerX += x1;
+        right_playerY += y1;
 
     }
 
@@ -128,7 +169,8 @@ public class GameWindow extends Frame {
         backbufferGraphics.fillRect(0,0,1024,768);
         backbufferGraphics.drawImage(background,0,backgroundY,null);
         backgroundY +=2;
-        backbufferGraphics.drawImage(straight_player,playerX,playerY,null);
+        backbufferGraphics.drawImage(straight_player,straight_playerX,straight_playerY,null);
+        backbufferGraphics.drawImage(right_player,right_playerX,right_playerY, null);
         windowGraphics.drawImage(backbufferImage,0,0,null);
 
     }
