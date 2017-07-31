@@ -23,7 +23,7 @@ public class GameWindow extends Frame {
 
     private void setupWindow() {
         this.setSize(1024, 768);
-        this.setTitle(" Touhou - Remade by Hai");
+        this.setTitle(" Touhou - Remade by Haidt");
         this.setVisible(true);
         this.addWindowListener(new WindowAdapter() {
             @Override
