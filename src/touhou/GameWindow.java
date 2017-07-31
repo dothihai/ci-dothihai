@@ -20,7 +20,7 @@ public class GameWindow extends Frame {
     private BufferedImage backbufferImage;
     private Graphics2D backbufferGraphics;
     private BufferedImage background;
-    private BufferedImage player;
+    private BufferedImage straight_player;
     private int playerX = 190;
     private int playerY = 600;
     private int backgroundY=-2000;
@@ -28,10 +28,9 @@ public class GameWindow extends Frame {
     private int y;
 
 
-
     public GameWindow() {
         background = SpriteUtils.loadImage("assets/images/background/0.png");
-        player = SpriteUtils.loadImage("assets/images/players/straight/0.png");
+        straight_player = SpriteUtils.loadImage("assets/images/players/straight/0.png");
         setupGameLoop();
         setupWindow();
     }
@@ -128,8 +127,8 @@ public class GameWindow extends Frame {
         backbufferGraphics.setColor(Color.black);
         backbufferGraphics.fillRect(0,0,1024,768);
         backbufferGraphics.drawImage(background,0,backgroundY,null);
-        backgroundY +=3;
-        backbufferGraphics.drawImage(player,playerX,playerY,null);
+        backgroundY +=2;
+        backbufferGraphics.drawImage(straight_player,playerX,playerY,null);
         windowGraphics.drawImage(backbufferImage,0,0,null);
 
     }
