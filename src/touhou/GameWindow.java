@@ -1,6 +1,10 @@
 package touhou;
 
 import tklibs.SpriteUtils;
+import touhou.bases.Constraints;
+import touhou.player.Player;
+import touhou.player.PlayerSpell;
+import touhou.player.input.InputManager;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -8,6 +12,9 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+
+import static java.awt.event.KeyEvent.*;
 
 /**
  * Created by huynq on 7/29/17.
@@ -17,26 +24,30 @@ public class GameWindow extends Frame {
     private long lastTimeUpdate;
     private long currentTime;
     private Graphics2D windowGraphics;
+
     private BufferedImage backbufferImage;
     private Graphics2D backbufferGraphics;
+
     private BufferedImage background;
-    private BufferedImage straight_player;
-    private BufferedImage right_player;
-    private int straight_playerX = 190;
-    private int straight_playerY = 600;
-    private int right_playerX = 10;
-    private int right_playerY = 600;
-    private int backgroundY=-2000;
-    private int x;
-    private int y;
-    private int x1;
-    private int y1;
+    public int backgroundY = -2000;
+
+    //private BufferedImage explosions;
+
+
+    Player player = new Player() ;
+    ArrayList<PlayerSpell> playerSpells = new ArrayList<>();
+    InputManager inputManager = new InputManager();
 
 
     public GameWindow() {
         background = SpriteUtils.loadImage("assets/images/background/0.png");
-        straight_player = SpriteUtils.loadImage("assets/images/players/straight/0.png");
-        right_player = SpriteUtils.loadImage("assets/images/players/right/0.png");
+        player.inputManager = this.inputManager;
+        player.constraints = new Constraints(30,708,0,360);
+        player.playerSpells = this.playerSpells;
+        //player.x = 384/2;
+        //player.y = 600;
+        //player.image = SpriteUtils.loadImage("assets/images/players/straight/0.png");
+        //explosions = SpriteUtils.loadImage("assets/images/players/explosions/0.png");
         setupGameLoop();
         setupWindow();
     }
@@ -48,11 +59,14 @@ public class GameWindow extends Frame {
     private void setupWindow() {
         this.setSize(1024, 768);
 
-        this.setTitle(" Touhou - Remade by Haidt");
+        this.setTitle("Touhou - Remade by QHuyDTVT");
         this.setVisible(true);
-        this.backbufferImage = new BufferedImage(getWidth(), getHeight(),BufferedImage.TYPE_INT_ARGB);
+
+        this.backbufferImage = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
         this.backbufferGraphics = (Graphics2D) this.backbufferImage.getGraphics();
+
         this.windowGraphics = (Graphics2D) this.getGraphics();
+
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -63,83 +77,20 @@ public class GameWindow extends Frame {
             @Override
             public void keyTyped(KeyEvent e) {
 
+
             }
 
             @Override
             public void keyPressed(KeyEvent e) {
-                if(e.getKeyCode() == KeyEvent.VK_RIGHT){
-                    x=2;
-                    System.out.println("RIGHT");
-                }
-                if(e.getKeyCode() == KeyEvent.VK_LEFT){
-                    x=-2;
-                    System.out.println("LEFT");
-                }
-                if(e.getKeyCode() == KeyEvent.VK_UP){
-                    y=-2;
-                    System.out.println("UP");
-                }
-                if(e.getKeyCode() == KeyEvent.VK_DOWN){
-                    y=2;
-                    System.out.println("DOWN");
-                }
-                if(e.getKeyCode() == KeyEvent.VK_D){
-                    x1=2;
-                    System.out.println("RIGHT");
-                }
-                if(e.getKeyCode() == KeyEvent.VK_A){
-                    x1=-2;
-                    System.out.println("LEFT");
-                }
-                if(e.getKeyCode() == KeyEvent.VK_W){
-                    y1=-2;
-                    System.out.println("UP");
-                }
-                if(e.getKeyCode() == KeyEvent.VK_Z){
-                    y1=2;
-                    System.out.println("DOWN");
-                }
-                System.out.println("key pressed");
-
-
+                inputManager.keyPressed(e);
             }
 
             @Override
             public void keyReleased(KeyEvent e) {
-                if(e.getKeyCode() == KeyEvent.VK_RIGHT){
-                    x=0;
-                    System.out.println("RIGHT");
-                }
-                if(e.getKeyCode() == KeyEvent.VK_LEFT){
-                    x=-0;
-                    System.out.println("LEFT");
-                }
-                if(e.getKeyCode() == KeyEvent.VK_UP){
-                    y=-0;
-                    System.out.println("UP");
-                }
-                if(e.getKeyCode() == KeyEvent.VK_DOWN){
-                    y=0;
-                    System.out.println("DOWN");
-                }
-                if(e.getKeyCode() == KeyEvent.VK_D){
-                    x1=0;
-                    System.out.println("RIGHT");
-                }
-                if(e.getKeyCode() == KeyEvent.VK_A){
-                    x1=0;
-                    System.out.println("LEFT");
-                }
-                if(e.getKeyCode() == KeyEvent.VK_W){
-                    y1=0;
-                    System.out.println("UP");
-                }
-                if(e.getKeyCode() == KeyEvent.VK_Z){
-                    y1=0;
-                    System.out.println("DOWN");
-                }
-                System.out.println("key released");
+                inputManager.keyReleased(e);
             }
+
+
         });
     }
 
@@ -152,26 +103,35 @@ public class GameWindow extends Frame {
             if (currentTime - lastTimeUpdate > 17) {
                 run();
                 render();
+                lastTimeUpdate = currentTime;
             }
         }
     }
 
     private void run() {
-        straight_playerX += x;
-        straight_playerY += y;
-        right_playerX += x1;
-        right_playerY += y1;
+        player.run();
+        for (PlayerSpell playerSpell : playerSpells){
 
+            playerSpell.run();
+        }
     }
 
     private void render() {
         backbufferGraphics.setColor(Color.black);
-        backbufferGraphics.fillRect(0,0,1024,768);
-        backbufferGraphics.drawImage(background,0,backgroundY,null);
-        backgroundY +=2;
-        backbufferGraphics.drawImage(straight_player,straight_playerX,straight_playerY,null);
-        backbufferGraphics.drawImage(right_player,right_playerX,right_playerY, null);
-        windowGraphics.drawImage(backbufferImage,0,0,null);
+        backbufferGraphics.fillRect(0, 0, 1024, 768);
+        backbufferGraphics.drawImage(background, 0, backgroundY, null);
 
+        {
+            if(backgroundY < 0)
+                backgroundY += 2;
+        }
+
+        player.render(backbufferGraphics);
+        //backbufferGraphics.drawImage(explosions,0,0,null);
+        for (PlayerSpell playerSpell : playerSpells){
+            playerSpell.render(backbufferGraphics);
+        }
+
+        windowGraphics.drawImage(backbufferImage, 0, 0, null);
     }
 }
