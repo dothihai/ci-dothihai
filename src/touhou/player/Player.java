@@ -3,7 +3,7 @@ package touhou.player;
 import tklibs.SpriteUtils;
 import touhou.bases.Constraints;
 import touhou.bases.Vecter2D;
-import touhou.player.input.InputManager;
+import touhou.inputs.InputManager;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -47,4 +47,3 @@ public class Player {
         g2d.drawImage(image, (int)position.x, (int)position.y,null);
     }
 }
-

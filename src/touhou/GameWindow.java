@@ -4,7 +4,7 @@ import tklibs.SpriteUtils;
 import touhou.bases.Constraints;
 import touhou.player.Player;
 import touhou.player.PlayerSpell;
-import touhou.player.input.InputManager;
+import touhou.inputs.InputManager;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;

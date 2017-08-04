@@ -1,4 +1,4 @@
-package touhou.player.input;
+package touhou.inputs;
 
 import java.awt.event.KeyEvent;
 
