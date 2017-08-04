@@ -57,9 +57,9 @@ public class GameWindow extends Frame {
     }
 
     private void setupWindow() {
-        this.setSize(1024, 768);
+        this.setSize(384, 768);
 
-        this.setTitle("Touhou - Remade by QHuyDTVT");
+        this.setTitle("Touhou - Remade by Hai");
         this.setVisible(true);
 
         this.backbufferImage = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
@@ -118,7 +118,7 @@ public class GameWindow extends Frame {
 
     private void render() {
         backbufferGraphics.setColor(Color.black);
-        backbufferGraphics.fillRect(0, 0, 1024, 768);
+        backbufferGraphics.fillRect(0, 0, 384, 768);
         backbufferGraphics.drawImage(background, 0, backgroundY, null);
 
         {

@@ -39,11 +39,12 @@ public class Player {
     private  void castSpell()
     {
         if (inputManager.xPressed) {
-            PlayerSpell newSpell = new PlayerSpell(position.add(10,0));
+            PlayerSpell newSpell = new PlayerSpell(position.add(0,10));
             playerSpells.add(newSpell);
         }
     }
     public void render(Graphics2D g2d){
+
         g2d.drawImage(image, (int)position.x, (int)position.y,null);
     }
 }
