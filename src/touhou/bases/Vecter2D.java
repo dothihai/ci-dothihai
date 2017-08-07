@@ -18,6 +18,15 @@ public class Vecter2D {
         this.x += dx;
         this.y += dy;
     }
+
+    public void set(float x, float y){
+        this.x = x;
+        this.y = y;
+    }
+
+    public void set(Vecter2D other){
+        set(other.x, other.y);
+    }
     public void addUp(Vecter2D other){
         addUp(other.x, other.y);
 

@@ -2,9 +2,9 @@ package touhou;
 
 import tklibs.SpriteUtils;
 import touhou.bases.Constraints;
+import touhou.inputs.InputManager;
 import touhou.player.Player;
 import touhou.player.PlayerSpell;
-import touhou.inputs.InputManager;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -15,6 +15,8 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import static java.awt.event.KeyEvent.*;
+
+//https://github.com/qhuydtvt/ci1-huynq
 
 /**
  * Created by huynq on 7/29/17.
@@ -29,25 +31,17 @@ public class GameWindow extends Frame {
     private Graphics2D backbufferGraphics;
 
     private BufferedImage background;
-    public int backgroundY = -2000;
 
-    //private BufferedImage explosions;
-
-
-    Player player = new Player() ;
+    Player player = new Player();
     ArrayList<PlayerSpell> playerSpells = new ArrayList<>();
     InputManager inputManager = new InputManager();
 
-
     public GameWindow() {
+        pack();
         background = SpriteUtils.loadImage("assets/images/background/0.png");
-        player.inputManager = this.inputManager;
-        player.constraints = new Constraints(30,708,0,360);
+        player.setInputManager(this.inputManager);
+        player.setConstraints (new Constraints(getInsets().top, 768, getInsets().left, 384));
         player.playerSpells = this.playerSpells;
-        //player.x = 384/2;
-        //player.y = 600;
-        //player.image = SpriteUtils.loadImage("assets/images/players/straight/0.png");
-        //explosions = SpriteUtils.loadImage("assets/images/players/explosions/0.png");
         setupGameLoop();
         setupWindow();
     }
@@ -57,9 +51,9 @@ public class GameWindow extends Frame {
     }
 
     private void setupWindow() {
-        this.setSize(384, 768);
+        this.setSize(1024, 768);
 
-        this.setTitle("Touhou - Remade by Hai");
+        this.setTitle("Touhou - Remade by QHuyDTVT");
         this.setVisible(true);
 
         this.backbufferImage = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
@@ -77,7 +71,6 @@ public class GameWindow extends Frame {
             @Override
             public void keyTyped(KeyEvent e) {
 
-
             }
 
             @Override
@@ -89,8 +82,6 @@ public class GameWindow extends Frame {
             public void keyReleased(KeyEvent e) {
                 inputManager.keyReleased(e);
             }
-
-
         });
     }
 
@@ -110,25 +101,19 @@ public class GameWindow extends Frame {
 
     private void run() {
         player.run();
-        for (PlayerSpell playerSpell : playerSpells){
 
+        for (PlayerSpell playerSpell : playerSpells) {
             playerSpell.run();
         }
     }
 
     private void render() {
         backbufferGraphics.setColor(Color.black);
-        backbufferGraphics.fillRect(0, 0, 384, 768);
-        backbufferGraphics.drawImage(background, 0, backgroundY, null);
-
-        {
-            if(backgroundY < 0)
-                backgroundY += 2;
-        }
-
+        backbufferGraphics.fillRect(0, 0, 1024, 768);
+        backbufferGraphics.drawImage(background, 0, 0, null);
         player.render(backbufferGraphics);
-        //backbufferGraphics.drawImage(explosions,0,0,null);
-        for (PlayerSpell playerSpell : playerSpells){
+
+        for (PlayerSpell playerSpell: playerSpells) {
             playerSpell.render(backbufferGraphics);
         }
 
