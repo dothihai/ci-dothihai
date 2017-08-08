@@ -42,6 +42,7 @@ public class GameWindow extends Frame {
     InputManager inputManager = new InputManager();
 
     ArrayList<Enemy> enemies = new ArrayList<>();
+    ArrayList<EnemySpell> enemySpells = new ArrayList<>();
 
     public GameWindow() {
         pack();
@@ -120,6 +121,9 @@ public class GameWindow extends Frame {
             coolDownCounter.reset();
             addEnemy();
         }
+        for (EnemySpell enemySpell : enemySpells){
+            enemySpell.run();
+        }
     }
 
     private void addEnemy(){
@@ -141,6 +145,10 @@ public class GameWindow extends Frame {
         for (Enemy enemy: enemies){
             enemy.render(backbufferGraphics);
         }
+        for (EnemySpell enemySpell : enemySpells){
+            enemySpell.render(backbufferGraphics);
+        }
+
         windowGraphics.drawImage(backbufferImage, 0, 0, null);
     }
 }

@@ -6,12 +6,15 @@ import touhou.bases.renderers.ImageRenderer;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 
 public class Enemy {
     private static final int SPEED = 5;
     private Vecter2D position;
     private ImageRenderer renderer;
+    //private int x;
+    public ArrayList<EnemySpell> enemySpells;
 
 
     public Enemy() {
@@ -20,9 +23,18 @@ public class Enemy {
         renderer = new ImageRenderer(image);
 
     }
+    //public void castSpell(){
+     //   EnemySpell newSpell = new EnemySpell();
+      //  enemySpells.add(newSpell);
+    //}
 
     public void run(){
         position.addUp(0, SPEED);
+    //    x++;
+    //    if(x >= 20){
+    //        castSpell();
+    //        x = 0;
+    //    }
     }
 
     public void render(Graphics2D g2d){
