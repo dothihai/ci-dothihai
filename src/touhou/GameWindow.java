@@ -2,6 +2,9 @@ package touhou;
 
 import tklibs.SpriteUtils;
 import touhou.bases.Constraints;
+import touhou.bases.FrameCounter;
+import touhou.enemy.Enemy;
+import touhou.enemy.EnemySpell;
 import touhou.inputs.InputManager;
 import touhou.player.Player;
 import touhou.player.PlayerSpell;
@@ -32,9 +35,13 @@ public class GameWindow extends Frame {
 
     private BufferedImage background;
 
+    private FrameCounter coolDownCounter;
+
     Player player = new Player();
     ArrayList<PlayerSpell> playerSpells = new ArrayList<>();
     InputManager inputManager = new InputManager();
+
+    ArrayList<Enemy> enemies = new ArrayList<>();
 
     public GameWindow() {
         pack();
@@ -42,6 +49,7 @@ public class GameWindow extends Frame {
         player.setInputManager(this.inputManager);
         player.setConstraints (new Constraints(getInsets().top, 768, getInsets().left, 384));
         player.playerSpells = this.playerSpells;
+        coolDownCounter = new FrameCounter(50);
         setupGameLoop();
         setupWindow();
     }
@@ -105,7 +113,21 @@ public class GameWindow extends Frame {
         for (PlayerSpell playerSpell : playerSpells) {
             playerSpell.run();
         }
+        for (Enemy enemy : enemies){
+            enemy.run();
+        }
+        if(coolDownCounter.run()){
+            coolDownCounter.reset();
+            addEnemy();
+        }
     }
+
+    private void addEnemy(){
+        Enemy newEnemy = new Enemy();
+        enemies.add(newEnemy);
+    }
+
+
 
     private void render() {
         backbufferGraphics.setColor(Color.black);
@@ -116,7 +138,9 @@ public class GameWindow extends Frame {
         for (PlayerSpell playerSpell: playerSpells) {
             playerSpell.render(backbufferGraphics);
         }
-
+        for (Enemy enemy: enemies){
+            enemy.render(backbufferGraphics);
+        }
         windowGraphics.drawImage(backbufferImage, 0, 0, null);
     }
 }
