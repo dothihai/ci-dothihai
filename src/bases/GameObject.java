@@ -1,12 +1,10 @@
 package bases;
 
 import bases.renderers.ImageRenderer;
-import touhou.players.PlayerSpell;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Vector;
-
 
 public class GameObject {
     protected Vector2D position;
@@ -15,8 +13,8 @@ public class GameObject {
     private static Vector<GameObject> gameObjects = new Vector<>();
     private static Vector<GameObject> newGameObjects = new Vector<>();
 
-    public static void runAll() {
-        for (GameObject gameObject : gameObjects) {
+    public static void runAll(){
+        for (GameObject gameObject : gameObjects){
             gameObject.run();
         }
 
@@ -24,29 +22,28 @@ public class GameObject {
         newGameObjects.clear();
     }
 
-    public static void renderAll(Graphics2D g2d) {
-        for (GameObject gameObject : gameObjects) {
+    public static void renderAll(Graphics2D g2d){
+        for (GameObject gameObject : gameObjects){
             gameObject.render(g2d);
         }
     }
 
-    public static void add(GameObject gameObject) {
+    public static void add(GameObject gameObject){
         newGameObjects.add(gameObject);
     }
+
+
 
     public GameObject() {
         position = new Vector2D();
     }
 
-
-    public void run() {
+    public void run(){
 
     }
 
-    public void render(Graphics2D g2d) {
-        if (renderer != null) {
-            renderer.render(g2d, position); // null.render() => NullPointerException
-        }
+    public void render(Graphics2D g2d){
+        renderer.render(g2d, position);
     }
 
     public Vector2D getPosition() {
@@ -54,8 +51,7 @@ public class GameObject {
     }
 
     public void setPosition(Vector2D position) {
-        if (position != null)
-            this.position = position;
+        this.position = position;
     }
 
     public ImageRenderer getRenderer() {
@@ -63,7 +59,8 @@ public class GameObject {
     }
 
     public void setRenderer(ImageRenderer renderer) {
-        if (renderer != null)
-            this.renderer = renderer;
+        this.renderer = renderer;
     }
+
+
 }
