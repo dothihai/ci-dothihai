@@ -4,6 +4,7 @@ import bases.renderers.ImageRenderer;
 import touhou.players.PlayerSpell;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.Vector;
 
 
@@ -36,6 +37,7 @@ public class GameObject {
     public GameObject() {
         position = new Vector2D();
     }
+
 
     public void run() {
 
