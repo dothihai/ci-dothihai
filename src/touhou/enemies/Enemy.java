@@ -23,7 +23,7 @@ public class Enemy extends GameObject {
     }
 
     private void shoot() {
-        // TODO: create enemies bullet and shoot
+        // TODO: create enemy bullet and shoot
     }
 
     private void fly() {

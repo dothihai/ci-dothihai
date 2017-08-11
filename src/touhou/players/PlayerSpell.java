@@ -13,7 +13,7 @@ public class PlayerSpell extends GameObject {
         super();
 
         this.renderer = new ImageRenderer(SpriteUtils.loadImage(
-                "assets/images/players-spells/a/0.png"
+                "assets/images/player-spells/a/0.png"
         ));
     }
 

@@ -5,9 +5,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 /**
- * Created by huynq on 5/11/17.
+ * Created by huynq on 8/9/17.
  */
 public class SpriteUtils {
 

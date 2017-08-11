@@ -6,6 +6,7 @@ import touhou.players.PlayerSpell;
 import java.awt.*;
 import java.util.Vector;
 
+
 public class GameObject {
     protected Vector2D position;
     protected ImageRenderer renderer;
@@ -14,7 +15,6 @@ public class GameObject {
     private static Vector<GameObject> newGameObjects = new Vector<>();
 
     public static void runAll() {
-
         for (GameObject gameObject : gameObjects) {
             gameObject.run();
         }
@@ -65,4 +65,3 @@ public class GameObject {
             this.renderer = renderer;
     }
 }
-

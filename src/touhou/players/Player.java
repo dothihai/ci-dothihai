@@ -50,7 +50,7 @@ public class Player extends GameObject {
 
     private void castSpell() {
         if (inputManager.xPressed && !spellLock) {
-            touhou.players.PlayerSpell newSpell = new touhou.players.PlayerSpell();
+            PlayerSpell newSpell = new PlayerSpell();
             newSpell.getPosition().set(this.position.add(0, -30));
             GameObject.add(newSpell);
 

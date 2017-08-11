@@ -13,6 +13,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
+import java.util.Vector;
+
 
 public class GameWindow extends Frame {
 
