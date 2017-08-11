@@ -1,4 +1,4 @@
-package touhou.bases;
+package bases;
 
 public class FrameCounter {
     private int count;

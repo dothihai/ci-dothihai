@@ -1,4 +1,4 @@
-package touhou.bases;
+package bases;
 
 public class Constraints {
     public float top;
@@ -13,7 +13,7 @@ public class Constraints {
         this.right = right;
     }
 
-    public void make(Vecter2D posittion){
+    public void make(Vector2D posittion){
         if(posittion.y < top) posittion.y = top;
         if(posittion.x < left) posittion.x = left;
         if(posittion.y > bottom) posittion.y = bottom;

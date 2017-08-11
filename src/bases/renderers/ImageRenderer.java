@@ -1,6 +1,6 @@
-package touhou.bases.renderers;
+package bases.renderers;
 
-import touhou.bases.Vecter2D;
+import bases.Vector2D;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -12,7 +12,7 @@ public class ImageRenderer {
         this.image = image;
     }
 
-    public void render(Graphics2D g2d, Vecter2D position){
+    public void render(Graphics2D g2d, Vector2D position){
         g2d.drawImage(image, (int)(position.x - image.getWidth()/2), (int)(position.y - image.getHeight()/2 ), null);
     }
 
