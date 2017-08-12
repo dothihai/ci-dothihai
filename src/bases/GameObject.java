@@ -1,21 +1,34 @@
 package bases;
 
+import bases.physics.Physics;
+import bases.physics.PhysicsBody;
 import bases.renderers.ImageRenderer;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.Vector;
 
 public class GameObject {
     protected Vector2D position;
+    protected Vector2D screenPosition;
+
     protected ImageRenderer renderer;
+    protected ArrayList<GameObject> children;
+    protected boolean isActive;
 
     private static Vector<GameObject> gameObjects = new Vector<>();
     private static Vector<GameObject> newGameObjects = new Vector<>();
 
     public static void runAll(){
         for (GameObject gameObject : gameObjects){
-            gameObject.run();
+            gameObject.run(new Vector2D(0,0)); //TODO: Optimize;
+        }
+
+        for(GameObject newGameObject : newGameObjects){
+            if(newGameObject instanceof PhysicsBody){
+                Physics.add((PhysicsBody)newGameObject);
+            }
         }
 
         gameObjects.addAll(newGameObjects);
@@ -36,14 +49,37 @@ public class GameObject {
 
     public GameObject() {
         position = new Vector2D();
+        children = new ArrayList<>();
+        screenPosition = new Vector2D();
+        isActive = true;
     }
 
-    public void run(){
+    public void run(Vector2D parentPosition){
+        screenPosition = parentPosition.add(position);
+        for(GameObject child: children){
+            if(child.isActive)
+            child.run(screenPosition);
+        }
 
     }
 
     public void render(Graphics2D g2d){
         renderer.render(g2d, position);
+        if(renderer != null){
+            renderer.render(g2d, screenPosition);
+        }
+        for(GameObject child: children){
+            if(child.isActive)
+                child.render(g2d);
+        }
+    }
+    public boolean isActive(){
+        return isActive;
+    }
+
+    public void setActive(boolean active){
+        isActive = active;
+
     }
 
     public Vector2D getPosition() {
@@ -62,5 +98,10 @@ public class GameObject {
         this.renderer = renderer;
     }
 
-
+    @Override
+    public String toString() {
+        return "GameObject{" +
+                "position=" + position +
+                '}';
+    }
 }

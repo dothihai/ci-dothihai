@@ -1,6 +1,7 @@
 package touhou.background;
 
 import bases.GameObject;
+import bases.Vector2D;
 import bases.renderers.ImageRenderer;
 import tklibs.SpriteUtils;
 
@@ -9,9 +10,9 @@ public class Background extends GameObject {
         super();
         renderer = new ImageRenderer(SpriteUtils.loadImage("assets/images/background/0.png"));
     }
-
-    public void run(){
-        super.run();
+    @Override
+    public void run(Vector2D parentPosition){
+        super.run(parentPosition);
         position.y += 4;
     }
 

@@ -2,25 +2,31 @@ package touhou.enemies;
 
 import bases.FrameCounter;
 import bases.GameObject;
+import bases.physics.BoxCollider;
+import bases.physics.PhysicsBody;
 import tklibs.SpriteUtils;
 import bases.Vector2D;
 import bases.renderers.ImageRenderer;
 
 import java.awt.*;
 
-public class Enemy extends GameObject {
+public class Enemy extends GameObject implements PhysicsBody {
     private static final float SPEED = 3;
     private FrameCounter frameCounter;
+    private BoxCollider boxCollider;
 
     public Enemy() {
         super();
         renderer = new ImageRenderer(SpriteUtils.loadImage("assets/images/enemies/level0/blue/0.png"));
-        frameCounter = new FrameCounter(50);
+        frameCounter = new FrameCounter(20);
+        boxCollider = new BoxCollider(20,20);
+        this.children.add(boxCollider);
     }
 
     // Controller
-    public void run() {
-        super.run();
+    @Override
+    public void run(Vector2D parentPosition ) {
+        super.run(parentPosition); // co cai nay moi dieu khien duoc children
         fly();
         shoot();
     }
@@ -37,5 +43,11 @@ public class Enemy extends GameObject {
 
     private void fly() {
         position.addUp(0, SPEED);
+        //System.out.println(boxCollider);
+    }
+
+    @Override
+    public BoxCollider getBoxCollider() {
+        return this.boxCollider;
     }
 }

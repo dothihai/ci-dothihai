@@ -1,3 +1,4 @@
+import bases.physics.BoxCollider;
 import touhou.GameWindow;
 
 /**
@@ -8,5 +9,8 @@ public class Program {
         GameWindow gameWindow = new GameWindow();
         gameWindow.loop();
 
+        //BoxCollider a = new BoxCollider(0,0,30,30);
+        //BoxCollider b = new BoxCollider(0,0,60,60);
+        //System.out.println(a.intersects(b));
     }
 }

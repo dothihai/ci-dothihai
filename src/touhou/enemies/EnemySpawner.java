@@ -2,6 +2,7 @@ package touhou.enemies;
 
 import bases.FrameCounter;
 import bases.GameObject;
+import bases.Vector2D;
 import bases.renderers.ImageRenderer;
 import tklibs.SpriteUtils;
 
@@ -21,8 +22,9 @@ public class EnemySpawner extends GameObject{
         renderer = new ImageRenderer(image);
     }
 
-    public void run(){
-        super.run();
+    @Override
+    public void run(Vector2D parentPositon){
+        super.run(parentPositon);
         spawnEnemy();
     }
 

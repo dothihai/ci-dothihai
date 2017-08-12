@@ -15,9 +15,9 @@ public class EnemySpell extends GameObject{
         super();
         renderer = new ImageRenderer(SpriteUtils.loadImage("assets/images/enemies/bullets/blue.png"));
     }
-
-    public void run(){
-        super.run();
+    @Override
+    public void run(Vector2D parentPosition){
+        super.run(parentPosition);
         position.addUp(0, SPEED);
     }
 }
