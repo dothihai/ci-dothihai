@@ -5,9 +5,6 @@ import touhou.enemies.Enemy;
 
 public class Physics {
     public static Vector<PhysicsBody> bodies = new Vector<>();
-    public static void add(PhysicsBody body){
-        bodies.add(body);
-    }
 
     public static Enemy collideWithEnemy(BoxCollider boxCollider){
         for(PhysicsBody body : bodies) {
@@ -20,5 +17,9 @@ public class Physics {
 
         return null;
 
+    }
+
+    public static void add(PhysicsBody body) {
+        bodies.add(body);
     }
 }

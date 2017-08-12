@@ -22,7 +22,8 @@ public class GameObject {
 
     public static void runAll(){
         for (GameObject gameObject : gameObjects){
-            gameObject.run(new Vector2D(0,0)); //TODO: Optimize;
+            if(gameObject.isActive)
+                gameObject.run(new Vector2D(0,0)); //TODO: Optimize;
         }
 
         for(GameObject newGameObject : newGameObjects){
@@ -37,7 +38,8 @@ public class GameObject {
 
     public static void renderAll(Graphics2D g2d){
         for (GameObject gameObject : gameObjects){
-            gameObject.render(g2d);
+            if(gameObject.isActive)
+                gameObject.render(g2d);
         }
     }
 
@@ -58,13 +60,13 @@ public class GameObject {
         screenPosition = parentPosition.add(position);
         for(GameObject child: children){
             if(child.isActive)
-            child.run(screenPosition);
+                child.run(screenPosition);
         }
 
     }
 
     public void render(Graphics2D g2d){
-        renderer.render(g2d, position);
+
         if(renderer != null){
             renderer.render(g2d, screenPosition);
         }
@@ -77,9 +79,8 @@ public class GameObject {
         return isActive;
     }
 
-    public void setActive(boolean active){
+    public void setActive(boolean active) {
         isActive = active;
-
     }
 
     public Vector2D getPosition() {
