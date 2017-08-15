@@ -22,6 +22,7 @@ public class Player extends GameObject implements PhysicsBody{
     private boolean spellLock;
     private BoxCollider boxCollider;
     private float blood;
+    private Sphere sphere;
 
 
     public Player() {
@@ -29,9 +30,12 @@ public class Player extends GameObject implements PhysicsBody{
         this.spellLock = false;
         this.renderer = new ImageRenderer(SpriteUtils.loadImage("assets/images/players/straight/0.png"));
         this.coolDownCounter = new FrameCounter(3);
+        CreatSphere(20, 0);
+        CreatSphere(-20, 0);
         boxCollider = new BoxCollider(20, 20);
-        this.children.add(boxCollider);
+        children.add(boxCollider);
         blood = 200;
+
     }
 
     public void setContraints(Constraints contraints) {
@@ -53,6 +57,9 @@ public class Player extends GameObject implements PhysicsBody{
 
         if (constraints != null) {
             constraints.make(position);
+        }
+        if (getBlood() <= 0){
+            this.setActive(false);
         }
 
         castSpell();
@@ -77,6 +84,11 @@ public class Player extends GameObject implements PhysicsBody{
                 spellLock = false;
             }
         }
+    }
+    private void CreatSphere(float x, float y){
+        sphere = new Sphere(x, y);
+        children.add(sphere);
+
     }
 
     public void setInputManager(InputManager inputManager) {
