@@ -8,6 +8,7 @@ import bases.physics.PhysicsBody;
 import tklibs.SpriteUtils;
 import bases.Vector2D;
 import bases.renderers.ImageRenderer;
+import touhou.enemies.EnemySpell;
 
 import java.awt.*;
 
@@ -17,9 +18,7 @@ public class PlayerSpell extends GameObject implements PhysicsBody {
     public PlayerSpell() {
         super();
 
-        this.renderer = new ImageRenderer(SpriteUtils.loadImage(
-                "assets/images/player-spells/a/0.png"
-        ));
+        this.renderer = new ImageRenderer(SpriteUtils.loadImage("assets/images/player-spells/a/0.png"));
         boxCollider = new BoxCollider(20, 20);
         this.children.add(boxCollider);
     }
@@ -29,6 +28,7 @@ public class PlayerSpell extends GameObject implements PhysicsBody {
         super.run(parenPosition);
         position.addUp(0, -10);
         hitEnemy();
+        hitEnemySpell();
     }
 
     private void hitEnemy() {
@@ -37,6 +37,13 @@ public class PlayerSpell extends GameObject implements PhysicsBody {
            enemy.setActive(false);
            this.isActive = false;
        }
+    }
+    private void hitEnemySpell(){
+        EnemySpell enemySpell = Physics.collideWithEnemySpell(this.boxCollider);
+        if(enemySpell != null){
+            enemySpell.setActive(false);
+            this.isActive = false;
+        }
     }
 
     @Override

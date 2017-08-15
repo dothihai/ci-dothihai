@@ -2,6 +2,8 @@ package touhou.players;
 
 import bases.GameObject;
 import bases.Vector2D;
+import bases.physics.BoxCollider;
+import bases.physics.PhysicsBody;
 import tklibs.SpriteUtils;
 import bases.Constraints;
 import bases.FrameCounter;
@@ -10,7 +12,7 @@ import touhou.inputs.InputManager;
 
 import java.util.Vector;
 
-public class Player extends GameObject {
+public class Player extends GameObject implements PhysicsBody{
     private static final int SPEED = 5;
 
     private InputManager inputManager;
@@ -18,12 +20,16 @@ public class Player extends GameObject {
 
     private FrameCounter coolDownCounter;
     private boolean spellLock;
+    private BoxCollider boxCollider;
+
 
     public Player() {
         super();
         this.spellLock = false;
         this.renderer = new ImageRenderer(SpriteUtils.loadImage("assets/images/players/straight/0.png"));
         this.coolDownCounter = new FrameCounter(3);
+        boxCollider = new BoxCollider(20, 20);
+        this.children.add(boxCollider);
     }
 
     public void setContraints(Constraints contraints) {
@@ -73,5 +79,9 @@ public class Player extends GameObject {
 
     public void setInputManager(InputManager inputManager) {
         this.inputManager = inputManager;
+    }
+
+    public BoxCollider getBoxCollider() {
+        return boxCollider;
     }
 }
