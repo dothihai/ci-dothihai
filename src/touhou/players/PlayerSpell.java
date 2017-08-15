@@ -14,6 +14,7 @@ import java.awt.*;
 
 public class PlayerSpell extends GameObject implements PhysicsBody {
     private BoxCollider boxCollider;
+    private float damage;
 
     public PlayerSpell() {
         super();
@@ -21,6 +22,7 @@ public class PlayerSpell extends GameObject implements PhysicsBody {
         this.renderer = new ImageRenderer(SpriteUtils.loadImage("assets/images/player-spells/a/0.png"));
         boxCollider = new BoxCollider(20, 20);
         this.children.add(boxCollider);
+        damage = 10;
     }
 
     @Override
@@ -34,7 +36,7 @@ public class PlayerSpell extends GameObject implements PhysicsBody {
     private void hitEnemy() {
        Enemy enemy = Physics.collideWithEnemy((this.boxCollider));
        if(enemy != null){
-           enemy.setActive(false);
+           enemy.setEnemyBlood(enemy.getEnemyBlood()- this.damage);
            this.isActive = false;
        }
     }

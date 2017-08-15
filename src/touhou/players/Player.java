@@ -21,6 +21,7 @@ public class Player extends GameObject implements PhysicsBody{
     private FrameCounter coolDownCounter;
     private boolean spellLock;
     private BoxCollider boxCollider;
+    private float blood;
 
 
     public Player() {
@@ -30,6 +31,7 @@ public class Player extends GameObject implements PhysicsBody{
         this.coolDownCounter = new FrameCounter(3);
         boxCollider = new BoxCollider(20, 20);
         this.children.add(boxCollider);
+        blood = 200;
     }
 
     public void setContraints(Constraints contraints) {
@@ -83,5 +85,20 @@ public class Player extends GameObject implements PhysicsBody{
 
     public BoxCollider getBoxCollider() {
         return boxCollider;
+    }
+
+    public float getBlood() {
+        return blood;
+    }
+
+    public void setBlood(float blood) {
+        this.blood = blood;
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "blood=" + blood +
+                '}';
     }
 }

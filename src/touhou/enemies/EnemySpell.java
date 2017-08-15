@@ -16,24 +16,28 @@ import touhou.players.Player;
 public class EnemySpell extends GameObject implements PhysicsBody{
     private final int SPEED = 5;
     private BoxCollider boxCollider;
+    private float damage;
+    private float typeSpell;
 
-    public EnemySpell() {
+    public EnemySpell(float typeSpell) {
         super();
         this.renderer = new ImageRenderer(SpriteUtils.loadImage("assets/images/enemies/bullets/blue.png"));
         boxCollider = new BoxCollider(20, 20);
         this.children.add(boxCollider);
+        this.typeSpell = typeSpell;
+        damage = 10;
     }
     @Override
     public void run(Vector2D parentPosition){
         super.run(parentPosition);
-        position.addUp(0, SPEED);
+        position.addUp(typeSpell, SPEED);
         hitPlayer();
     }
 
     private void hitPlayer(){
         Player player = Physics.collideWithPlayer(this.boxCollider);
         if(player != null){
-            player.setActive(false);
+            player.setBlood(player.getBlood() - this.damage);
             this.isActive = false;
         }
     }
