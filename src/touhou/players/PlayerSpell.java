@@ -21,6 +21,8 @@ public class PlayerSpell extends GameObject implements PhysicsBody {
         super();
 
         renderer = new Animation(
+                1,
+                false,
                 SpriteUtils.loadImage("assets/images/player-spells/a/0.png"),
                 SpriteUtils.loadImage("assets/images/player-spells/a/1.png"),
                 SpriteUtils.loadImage("assets/images/player-spells/a/2.png"),
@@ -41,11 +43,11 @@ public class PlayerSpell extends GameObject implements PhysicsBody {
     }
 
     private void hitEnemy() {
-       Enemy enemy = Physics.collideWith(this.boxCollider, Enemy.class);
-       if(enemy != null){
-           enemy.setEnemyBlood(enemy.getEnemyBlood()- this.damage);
-           this.isActive = false;
-       }
+        Enemy enemy = Physics.collideWith(this.boxCollider, Enemy.class);
+        if(enemy != null){
+            enemy.setEnemyBlood(enemy.getEnemyBlood()- this.damage);
+            this.isActive = false;
+        }
     }
     private void hitEnemySpell(){
         EnemySpell enemySpell = Physics.collideWith(this.boxCollider, EnemySpell.class);

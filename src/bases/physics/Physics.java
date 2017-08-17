@@ -1,14 +1,14 @@
 package bases.physics;
 
-import java.util.Vector;
 import touhou.enemies.Enemy;
-import touhou.enemies.EnemySpell;
-import touhou.players.Player;
+
+import java.util.Vector;
+
 
 public class Physics {
-    public static Vector<PhysicsBody> bodies = new Vector<>();
+    private static Vector<PhysicsBody> bodies = new Vector<>(); // Generics
 
-    public static <T extends PhysicsBody> T collideWith(BoxCollider boxCollider, Class<T> classz){
+    public static <T extends PhysicsBody> T collideWith(BoxCollider boxCollider, Class<T> classz) {
         for(PhysicsBody body : bodies) {
             if (body.isActive()) {
                 if (body.getClass().equals(classz) && body.getBoxCollider().intersects(boxCollider)) {
@@ -18,8 +18,9 @@ public class Physics {
         }
 
         return null;
-
     }
+
+    // TODO: collide with many
 
     public static void add(PhysicsBody body) {
         bodies.add(body);

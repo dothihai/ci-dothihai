@@ -1,17 +1,12 @@
 package touhou;
 
 import bases.GameObject;
-import tklibs.SpriteUtils;
 import touhou.background.Background;
-import touhou.enemies.Enemy;
 import touhou.enemies.EnemySpawner;
-import touhou.enemies.EnemySpell;
+
 import bases.Constraints;
-import bases.FrameCounter;
-import touhou.background.Background;
 import touhou.inputs.InputManager;
 import touhou.players.Player;
-import touhou.players.PlayerSpell;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -19,11 +14,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
-/**
- * Created by huynq on 7/29/17.
- */
+
 public class GameWindow extends Frame {
 
     private long lastTimeUpdate;
@@ -118,6 +110,7 @@ public class GameWindow extends Frame {
 
     private void run() {
         GameObject.runAll();
+        enemySpawner.spawn();
     }
 
     private void render() {
