@@ -1,4 +1,5 @@
 package touhou.players;
+import bases.renderers.Animation;
 import touhou.enemies.Enemy;
 
 import bases.GameObject;
@@ -19,7 +20,12 @@ public class PlayerSpell extends GameObject implements PhysicsBody {
     public PlayerSpell() {
         super();
 
-        this.renderer = new ImageRenderer(SpriteUtils.loadImage("assets/images/player-spells/a/0.png"));
+        renderer = new Animation(
+                SpriteUtils.loadImage("assets/images/player-spells/a/0.png"),
+                SpriteUtils.loadImage("assets/images/player-spells/a/1.png"),
+                SpriteUtils.loadImage("assets/images/player-spells/a/2.png"),
+                SpriteUtils.loadImage("assets/images/player-spells/a/3.png")
+        );
         boxCollider = new BoxCollider(20, 20);
         this.children.add(boxCollider);
         damage = 10;
@@ -31,19 +37,26 @@ public class PlayerSpell extends GameObject implements PhysicsBody {
         position.addUp(0, -10);
         hitEnemy();
         hitEnemySpell();
+        deactiveIfNeeded();
     }
 
     private void hitEnemy() {
-       Enemy enemy = Physics.collideWithEnemy((this.boxCollider));
+       Enemy enemy = Physics.collideWith(this.boxCollider, Enemy.class);
        if(enemy != null){
            enemy.setEnemyBlood(enemy.getEnemyBlood()- this.damage);
            this.isActive = false;
        }
     }
     private void hitEnemySpell(){
-        EnemySpell enemySpell = Physics.collideWithEnemySpell(this.boxCollider);
+        EnemySpell enemySpell = Physics.collideWith(this.boxCollider, EnemySpell.class);
         if(enemySpell != null){
             enemySpell.setActive(false);
+            this.isActive = false;
+        }
+    }
+
+    private void deactiveIfNeeded() {
+        if (this.screenPosition.y < 0) {
             this.isActive = false;
         }
     }

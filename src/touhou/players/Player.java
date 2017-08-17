@@ -4,11 +4,14 @@ import bases.GameObject;
 import bases.Vector2D;
 import bases.physics.BoxCollider;
 import bases.physics.PhysicsBody;
+import bases.pools.GameObjectPool;
+import javafx.scene.shape.Sphere;
 import tklibs.SpriteUtils;
 import bases.Constraints;
 import bases.FrameCounter;
 import bases.renderers.ImageRenderer;
 import touhou.inputs.InputManager;
+import touhou.players.spheres.PlayerSphere;
 
 import java.util.Vector;
 
@@ -22,7 +25,6 @@ public class Player extends GameObject implements PhysicsBody{
     private boolean spellLock;
     private BoxCollider boxCollider;
     private float blood;
-    private Sphere sphere;
 
 
     public Player() {
@@ -30,12 +32,20 @@ public class Player extends GameObject implements PhysicsBody{
         this.spellLock = false;
         this.renderer = new ImageRenderer(SpriteUtils.loadImage("assets/images/players/straight/0.png"));
         this.coolDownCounter = new FrameCounter(3);
-        CreatSphere(20, 0);
-        CreatSphere(-20, 0);
         boxCollider = new BoxCollider(20, 20);
         children.add(boxCollider);
         blood = 200;
+        addSpheres();
 
+    }
+
+    private void addSpheres(){
+        PlayerSphere leftSphere = new PlayerSphere();
+        leftSphere.getPosition().set(-20, 0);
+        PlayerSphere rightSphere = new PlayerSphere();
+        rightSphere.getPosition().set(20, 0);
+        this.children.add(leftSphere);
+        this.children.add(rightSphere);
     }
 
     public void setContraints(Constraints contraints) {
@@ -67,9 +77,8 @@ public class Player extends GameObject implements PhysicsBody{
 
     private void castSpell() {
         if (inputManager.xPressed && !spellLock) {
-            PlayerSpell newSpell = new PlayerSpell();
+            PlayerSpell newSpell = GameObjectPool.recycle(PlayerSpell.class);
             newSpell.getPosition().set(this.position.add(0, -30));
-            GameObject.add(newSpell);
 
             spellLock = true;
             coolDownCounter.reset();
@@ -85,11 +94,7 @@ public class Player extends GameObject implements PhysicsBody{
             }
         }
     }
-    private void CreatSphere(float x, float y){
-        sphere = new Sphere(x, y);
-        children.add(sphere);
 
-    }
 
     public void setInputManager(InputManager inputManager) {
         this.inputManager = inputManager;

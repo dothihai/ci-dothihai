@@ -8,39 +8,17 @@ import touhou.players.Player;
 public class Physics {
     public static Vector<PhysicsBody> bodies = new Vector<>();
 
-    public static Enemy collideWithEnemy(BoxCollider boxCollider){
+    public static <T extends PhysicsBody> T collideWith(BoxCollider boxCollider, Class<T> classz){
         for(PhysicsBody body : bodies) {
             if (body.isActive()) {
-                if (body instanceof Enemy && body.getBoxCollider().intersects(boxCollider)) {
-                    return (Enemy) body;
+                if (body.getClass().equals(classz) && body.getBoxCollider().intersects(boxCollider)) {
+                    return (T) body;
                 }
             }
         }
 
         return null;
 
-    }
-
-    public static Player collideWithPlayer(BoxCollider boxCollider){
-        for(PhysicsBody body : bodies){
-            if(body.isActive()){
-                if(body instanceof Player && body.getBoxCollider().intersects(boxCollider)){
-                    return (Player) body;
-                }
-            }
-        }
-        return null;
-    }
-
-    public static EnemySpell collideWithEnemySpell(BoxCollider boxCollider){
-        for(PhysicsBody body : bodies){
-            if(body.isActive()){
-                if(body instanceof EnemySpell && body.getBoxCollider().intersects(boxCollider)){
-                    return (EnemySpell) body;
-                }
-            }
-        }
-        return null;
     }
 
     public static void add(PhysicsBody body) {

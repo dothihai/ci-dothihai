@@ -19,6 +19,7 @@ public class EnemySpell extends GameObject implements PhysicsBody{
     private float damage;
     private float typeSpell;
 
+
     public EnemySpell(float typeSpell) {
         super();
         this.renderer = new ImageRenderer(SpriteUtils.loadImage("assets/images/enemies/bullets/blue.png"));
@@ -35,7 +36,7 @@ public class EnemySpell extends GameObject implements PhysicsBody{
     }
 
     private void hitPlayer(){
-        Player player = Physics.collideWithPlayer(this.boxCollider);
+        Player player = Physics.collideWith(this.boxCollider, Player.class);
         if(player != null){
             player.setBlood(player.getBlood() - this.damage);
             this.isActive = false;
