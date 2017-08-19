@@ -17,22 +17,21 @@ public class EnemySpell extends GameObject implements PhysicsBody{
     private final int SPEED = 5;
     private BoxCollider boxCollider;
     private float damage;
-    private float typeSpell;
 
 
-    public EnemySpell(float typeSpell) {
+    public EnemySpell() {
         super();
         this.renderer = new ImageRenderer(SpriteUtils.loadImage("assets/images/enemies/bullets/blue.png"));
         boxCollider = new BoxCollider(20, 20);
         this.children.add(boxCollider);
-        this.typeSpell = typeSpell;
-        damage = 10;
+        damage = 5;
     }
     @Override
     public void run(Vector2D parentPosition){
         super.run(parentPosition);
-        position.addUp(typeSpell, SPEED);
+        position.addUp(0, SPEED);
         hitPlayer();
+        deactiveIfNeeded();
     }
 
     private void hitPlayer(){
@@ -42,6 +41,13 @@ public class EnemySpell extends GameObject implements PhysicsBody{
             this.isActive = false;
         }
     }
+
+    private void deactiveIfNeeded() {
+        if (this.screenPosition.y > 768) {
+            this.isActive = false;
+        }
+    }
+
     @Override
     public BoxCollider getBoxCollider() {
         return boxCollider;

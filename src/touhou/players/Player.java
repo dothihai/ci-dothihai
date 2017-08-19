@@ -5,6 +5,7 @@ import bases.Vector2D;
 import bases.physics.BoxCollider;
 import bases.physics.PhysicsBody;
 import bases.pools.GameObjectPool;
+import bases.renderers.Animation;
 import javafx.scene.shape.Sphere;
 import tklibs.SpriteUtils;
 import bases.Constraints;
@@ -30,8 +31,17 @@ public class Player extends GameObject implements PhysicsBody{
     public Player() {
         super();
         this.spellLock = false;
-        this.renderer = new ImageRenderer(SpriteUtils.loadImage("assets/images/players/straight/0.png"));
-        this.coolDownCounter = new FrameCounter(3);
+        this.renderer = new Animation(
+                SpriteUtils.loadImage("assets/images/players/straight/0.png"),
+                SpriteUtils.loadImage("assets/images/players/straight/1.png"),
+                SpriteUtils.loadImage("assets/images/players/straight/2.png"),
+                SpriteUtils.loadImage("assets/images/players/straight/3.png"),
+                SpriteUtils.loadImage("assets/images/players/straight/4.png"),
+                SpriteUtils.loadImage("assets/images/players/straight/5.png"),
+                SpriteUtils.loadImage("assets/images/players/straight/6.png")
+
+        );
+        this.coolDownCounter = new FrameCounter(2);
         boxCollider = new BoxCollider(20, 20);
         children.add(boxCollider);
         blood = 200;

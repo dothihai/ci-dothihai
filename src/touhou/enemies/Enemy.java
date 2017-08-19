@@ -35,10 +35,11 @@ public class Enemy extends GameObject implements PhysicsBody {
                 SpriteUtils.loadImage("assets/images/enemies/level0/blue/2.png"),
                 SpriteUtils.loadImage("assets/images/enemies/level0/blue/3.png")
         );
-        this.frameCounter = new FrameCounter(20);
+        this.frameCounter = new FrameCounter(10);
         this.boxCollider = new BoxCollider(20,20);
         this.children.add(boxCollider);
-        this.damage = 50;
+        this.damage = 20;
+        this.enemyBlood = 10;
     }
 
     // Controller
@@ -48,7 +49,14 @@ public class Enemy extends GameObject implements PhysicsBody {
         fly();
         shoot();
         hitPlayer();
+        deactiveIfNeeded();
         if(this.getEnemyBlood() < 0){
+            this.isActive = false;
+        }
+    }
+
+    private void deactiveIfNeeded() {
+        if (this.screenPosition.y > 768) {
             this.isActive = false;
         }
     }
@@ -56,17 +64,14 @@ public class Enemy extends GameObject implements PhysicsBody {
     private void shoot() {
         // TODO: create enemy bullet and shoot
         if (frameCounter.run()) {
-            CastSpell(1,10, 3);
-            CastSpell(1,10, 0);
-            CastSpell(1,10, -3);
+            EnemySpell newSpell = GameObjectPool.recycle(EnemySpell.class);
+            newSpell.getPosition().set(this.position.add(0, 10));
+
             frameCounter.reset();
+            GameObject.add(newSpell);
         }
     }
-    private void CastSpell(float x, float y, int typeEnemy){
-        EnemySpell newSpell = new EnemySpell(typeEnemy);
-        newSpell.getPosition().set(this.position.add(x, y));
-        GameObject.add(newSpell);
-    }
+
 
     private void fly() {
         position.addUp(0, SPEED);

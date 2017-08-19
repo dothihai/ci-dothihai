@@ -21,8 +21,6 @@ public class PlayerSpell extends GameObject implements PhysicsBody {
         super();
 
         renderer = new Animation(
-                1,
-                false,
                 SpriteUtils.loadImage("assets/images/player-spells/a/0.png"),
                 SpriteUtils.loadImage("assets/images/player-spells/a/1.png"),
                 SpriteUtils.loadImage("assets/images/player-spells/a/2.png"),
@@ -30,7 +28,7 @@ public class PlayerSpell extends GameObject implements PhysicsBody {
         );
         boxCollider = new BoxCollider(20, 20);
         this.children.add(boxCollider);
-        damage = 10;
+        damage = 5;
     }
 
     @Override
